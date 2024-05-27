@@ -1,69 +1,69 @@
-= = = = = = = = = = = = = = = =
+================
 
-2024/5/20:
-morning
-Try to do this in some other way using recursive thinking generate(str: string, current: float, numbers: list)
-This one is done recursively by "as", although there are parentheses but there are (incomplete parentheses, repeated problems)
+2024 / 5 / 20:
+    早上
+        尝试用其他的方式完成 这道题 用递归的思维 generate(str: string, current: float, numbers: list)
+        通过递归的方式 "如" 完成了这个一个，虽然有括号但是有 (括号不全, 重复的问题)
 
-PM
-Try to find a problem when you find that the two problems are not recursively solved, use Liam J's enumeration algorithm. I used it on this day
-itertools.permutations(test_numbers, 4) and itertools.product(['*', '/', '+', '-'], repeat = 3)
-To generate a reasonable expression. But I still don't know what to do about the parentheses.
+    下午
+        发现尝试一有问题的时候发现那两个问题递归是解决不了的，改用 Liam J 的枚举式算法。在这一天我用了
+        itertools.permutations(test_numbers, 4) 和 itertools.product(['*', '/', '+', '-'], repeat = 3)
+        来生成一个合理的表达式。但是关于括号的问题还是不知道该怎么解决。
+    
+    晚上
+        因为想不到可以用一个合适的算法来生成这个括号，但是在看了一个 csdn 的网站后发现括号的组成是很少的
+        我瞬间觉得好像用程序枚举括号的样式没有什么用直接，枚举存在一个 list 就行了 (只有 11 种情况)，并且成功
+        的输出了带括号的表达式很完整但是还是有一些的括号没有除掉多余的括号并且交换律和结合律还未解决
 
-evening
-Because I can't think of a suitable algorithm to generate this bracket, but after looking at a csdn website, I found that the composition of brackets is very small
-I suddenly feel as if the style of enumeration parentheses with the program is not useful directly, enumeration there is a list on the line (only 11 cases), and successful
-The output of the parenthesized expression is complete but there are still some parentheses that are not removed and the commutative and associative laws are not solved
+================
 
-= = = = = = = = = = = = = = = =
+2024 / 5 / 21:
 
-2024/5/21:
+    早上
+        想写一个方法可以判断两个等式是否 等价(可以通过 交换律和结合律 钻换后得到的式子)
+        第一次想的是从他们的 style 入手 但是发现会写很多的，不好枚举 放弃了这个想法；
+        后来想写一个算法把表达式转化成 哥德尔数 之类的东西每一种等式对应每一个值，但是想了很久还是没有想出来就是
+        感觉完全的不可行 (不知道怎样的构造这个算法)
 
-morning
-Want to write a method to determine whether two equations are equivalent (you can drill through the commutative law and associative law)
-The first time I wanted to start with their style, but I found that there would be too many to enumerate and gave up the idea;
-And then I wanted to write an algorithm that would turn expressions into something like Godel's numbers where every kind of equation corresponds to every value, but I couldn't figure it out for a long time
-Feels completely unworkable (don't know how to construct this algorithm)
+    下午
+        继续想 哥德尔数，然后一个疯狂的想法对他进行了改进。当时我想的是 来一次压缩对表达式进行模糊化
+        但后来进行扩展之后发现可以让 等价 的表达式指向同一个表达式就行了我的 判断函数 就可以写了。后来这个想法
+        进行了修改 标准话，我提出了一个概念让说所有的表达式尽可能的变成一个 标准的。并且指明了后来的大概路线
+        1. 拆掉不必要的括号 2.标准化 3.去掉 判断 是否等价 的函数 转换为 哈希表去掉一摸一样的表达式
+    
+    晚上
+        进行了第一步: 根据 style 的类型进行了分类讨论，对于每一个 style 讨论这个括号在哪一种情况下可以拆掉
+        肝完了
 
-PM
-Continuing to think of Godel's number, then a crazy idea improved upon him. What I was thinking was to do a compression to blur the expression
-But then I extended it and I found that I could make equivalent expressions refer to the same expression and I could write my judgment function. Later this idea
-To modify the standard language, I propose a concept to make all expressions as standard as possible. And pointed out the general route
-1. Remove unnecessary parentheses 2. Standardize 3. Remove the function that determines whether it is equivalent to convert to a hash table and remove a similar expression
+================
 
-evening
-The first step is carried out: classification discussion is carried out according to the type of style. For each style discussion, in which case can the bracket be removed
-Liver is over
+2024 / 5 / 22:
 
-= = = = = = = = = = = = = = = =
+    早上:
+        发现了人工找到错误的例子很慢而且不是很准确，写了另一个程序 test.py 来验证经过 去括号 的表达式的值和原
+        表达式的值式否的相等，如果是不相等的输出错误案例 (用比较特殊的质数作为案例)
 
-2024/5/22:
+    下午:
+        继续想 标准化 这个过程如何实现，首先我定义了一些类型的表达式是标准的，所有拆完括号的式子必须满足
+        标准式的格式，然后得出了结论可以分成两个步骤
+        1. 进行交换律主要式调整 + - * / 符号在表达式的位置
+        2. 对于同种的运算规律 比如 2 + 1 + 3 变成 1 + 2 + 3 进行排序
 
-Morning:
-Finding examples where manual error finding was slow and not very accurate, I wrote another program, test.py, to verify the value and primitive of the parenthesized expression
-The value of the expression is not equal, if it is not equal, the output error case (using the more special prime number as the case)
+    晚上:
+        进行 下午 的步骤第一步，并且在 test.py 中添加新的函数测试正确性。同时我发现我的枚举容易遗漏情况
+        开发 新的.py 文件 帮我枚举，帮我输出剩下的没考虑的情况。进行观察和改进，有些情况式可以合并的
 
-Afternoon:
-So how do we do this normalization process, first of all I've defined some types of expressions that are standard, that all parenthesized expressions must satisfy
-The standard format is then drawn to a conclusion that can be divided into two steps
-1. Adjust the position of the + - * / symbol in the expression with the commutative law
-2. Sort the same operation law such as 2 + 1 + 3 into 1 + 2 + 3
+================
+    
+2024 / 5 / 23
 
-Night:
-Go to step 1 of the afternoon step and add new functions to test.py to test correctness. I also find that my enumerations tend to miss things
-Develop new.py files to help me enumerate and output the rest of the unconsidered cases. To observe and improve, some cases can be combined
+    早上:
+        进行 昨天下午 的第二部分，同样在 test.py 里面添加函数测试正确性。在 枚举.py的文件 帮我枚举新的情况
 
-= = = = = = = = = = = = = = = =
+    下午:
+        完成了 昨天下午 的第二部分 (没啥好说的，肝就完了)
 
-2024/5/23
+    晚上:
+        检查出了一个 bug 并且改进，打包成 .exe 文件
 
-Morning:
-Do the second part yesterday afternoon and also add functions to test.py to test correctness. The.py file enumerates new situations for me
-
-Afternoon:
-Finished the second part of yesterday afternoon (nothing to say, liver is over)
-
-Night:
-A bug was detected and improved, packaged as an.exe file
-
-= = = = = = = = = = = = = = = =
+================

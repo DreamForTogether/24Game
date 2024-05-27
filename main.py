@@ -313,8 +313,12 @@ def format_signal(self: Expression) -> Expression:
         # a + b - ? == (b - ? + a)
         if x == '+' and y == '-': return format_signal(Expression(styles[5], [b, c, d, a], ['-', z, '+']))
 
-        # (4) ['-', '*'] ['-', '/']
-        if x == '-' and (y == '*' or y == '/'): return self
+        # (4) ['-', '*']
+        # a - b * ? => a - ? * b
+        if x == '-' and y == '*': return format_signal(Expression(styles[5], [a, c, d, b], ['-', z, '*']))
+
+        # (4) ['-', '/']
+        if x == '-' and y == '/': return self
 
         # (4) ['-', '+']
         # a - b + ? == format_signal(a + ? - b)
